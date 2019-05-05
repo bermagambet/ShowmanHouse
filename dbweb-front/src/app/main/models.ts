@@ -23,7 +23,11 @@
   export interface IEventsTypes{
     id: number;
     event_title: string;
-    event_desctription: string;
+    event_description: string;
+  }
+
+  export interface IOrder{
+    id: number;
   }
 
   export interface IUser{

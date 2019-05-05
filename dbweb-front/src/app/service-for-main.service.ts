@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IAuthResponse, IAttendees, IEventsTypes, IUser} from './main/models';
+import {IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder} from './main/models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,23 @@ export class ServiceForMainService extends MainService {
 
   getEventTypes(): Promise<IEventsTypes[]> {
     return this.get('http://localhost:8000/api/events/', {});
+  }
+
+  getOrders(): Promise<IOrder[]> {
+    return this.get('http://localhost:8000/api/orders/', {});
+  }
+  
+  getOrder(order: IOrder): Promise<IOrder> {
+    return this.get('http://localhost:8000/api/orders/' + order.id + '/', {});
+  }
+
+  createOrder(id: number, event_id: number, customer_id: number, department_id: number): Promise<IOrder> {
+    return this.post('http://localhost:8000/api/orders/', {
+      id: id,
+      event_id: event_id,
+      customer_id: customer_id,
+      department_id: department_id
+    });
   }
 
   getEventType(): Promise<IEventsTypes[]> {

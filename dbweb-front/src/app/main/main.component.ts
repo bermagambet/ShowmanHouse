@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../service-for-main.service';
-import { IEventsTypes, IAttendees } from './models';
+import { IEventsTypes, IAttendees, IOrder } from './models';
 
 @Component({
   selector: 'app-main',
@@ -19,6 +19,8 @@ export class MainComponent implements OnInit {
   // public products: IProduct[] = [];
   public eventtypes: IEventsTypes[] = [];
   public attendees: IAttendees[]=[];
+  public orders: IOrder[]=[];
+  public order: IOrder;
   public name: any = '';
 
   public isLogged = false;
@@ -37,7 +39,7 @@ export class MainComponent implements OnInit {
     }
 
     if (this.isLogged) {
-      //this.getEventTypes();
+      this.getEventTypes();
     }
 
   }
@@ -55,6 +57,19 @@ export class MainComponent implements OnInit {
       this.loading = true;
     });
   }
+
+  getOrders() {
+    this.provider.getOrders().then(res => {
+      this.orders = res;
+    });
+  }
+
+  getOrder(order: IOrder){
+    this.provider.getOrder(order).then(res => {
+      this.order = res;
+    });
+  }
+
 
   // getProducts(category: ICategory) {
   //   this.provider.getProducts(category).then(res => {
@@ -95,7 +110,7 @@ export class MainComponent implements OnInit {
       this.provider.auth(this.login, this.password).then(res => {
         localStorage.setItem('token', res.token);
         this.isLogged = true;
-        // this.getCategories();
+        this.getEventTypes();
       });
     }
   }

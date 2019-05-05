@@ -7,11 +7,12 @@
       <input type="password" placeholder="Password" [(ngModel)]="password"/>
     </div>
     <div>
-      <button (click)="auth()">Log in</button>
+      <button (click)="Mauth()">Log in</button>
     </div>
   </div>
 </ng-container>
 
+<ng-container *ngIf="isLogged">
 <div id="header">
     <img src=" " width="180" height="140">
     <div id="info">
@@ -38,7 +39,6 @@
     <h1>EventTypes:</h1>
     </div>
   </div>
-<ng-container *ngIf="isLogged">
 <h1>EVENTTYPES:</h1>
   <ng-container *ngIf="!loading">
     Loading...
@@ -64,4 +64,4 @@
       <em> Copyright Database2019 </em>
   </div>
 
-</ng-container> 
+</ng-container>
