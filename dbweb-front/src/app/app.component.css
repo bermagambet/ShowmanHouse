@@ -1,0 +1,28 @@
+#header {height: 50px; width: 385px; margin: 0 auto}
+#header ul {margin: 0; padding: 0}
+#header li {display: inline}
+#header a {
+float: left;
+width: 125px;
+height: 30px;
+background-color: #cc0033;
+border-left: 2px solid #ffffff;
+text-decoration: none;
+text-align: center;
+padding: 0;
+padding-top: 10px;
+font-size: 18px;
+color: #ffffff
+}
+
+#main {
+    display: block;
+    width: 100%;
+    height: 80%;
+}
+
+#footer {
+    display: block;
+    margin: 2% 0 10%;
+    text-align: center;
+}
