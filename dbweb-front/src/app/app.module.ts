@@ -8,6 +8,7 @@ import {ServiceForMainService} from './service-for-main.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './main/AuthInterceptor';
+import { MainService } from './main.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import {AuthInterceptor} from './main/AuthInterceptor';
   ],
   providers: [
     ServiceForMainService,
+    MainService,
     <ClassProvider> {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

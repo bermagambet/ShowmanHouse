@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     }
 
     if (this.isLogged) {
-      // this.getCategories();
+      //this.getEventTypes();
     }
 
   }
@@ -90,7 +90,7 @@ export class MainComponent implements OnInit {
   //   }
   // }
 
-  auth() {
+  Mauth() {
     if (this.login !== '' && this.password !== '') {
       this.provider.auth(this.login, this.password).then(res => {
         localStorage.setItem('token', res.token);
