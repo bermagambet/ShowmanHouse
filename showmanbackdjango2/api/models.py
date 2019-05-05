@@ -33,17 +33,9 @@ class DjangoMigrations(models.Model):
         db_table = 'django_migrations'
 
 
-class EventTypes(models.Model):
-    id = models.IntegerField(primary_key=True)
-    event_title = models.CharField(max_length=50, blank=True, null=True)
-    event_description = models.CharField(max_length=50, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'Event_Types'
 
 
-class FeeSchedule(models.Model):
+class FeeSchedule1(models.Model):
     id = models.IntegerField(primary_key=True)
     payment_date = models.DateField()
     payment_amount = models.IntegerField()
@@ -52,15 +44,24 @@ class FeeSchedule(models.Model):
         db_table = 'Fee_Schedule'
 
 
-class PaymentMethod(models.Model):
+class EventTypes1(models.Model):
+    id = models.IntegerField(primary_key=True)
+    event_title = models.CharField(max_length=50, blank=True, null=True)
+    event_description = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Event_Types'
+
+class PaymentMethod1(models.Model):
     method_name = models.CharField(max_length=50)
-    payment_id = models.ForeignKey(FeeSchedule, on_delete=models.CASCADE)
+    payment_id = models.ForeignKey(FeeSchedule1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Payment_Method'
 
 
-class Country(models.Model):
+class Country1(models.Model):
     id = models.IntegerField(primary_key=True)
     country_name = models.CharField(max_length=50)
 
@@ -68,125 +69,134 @@ class Country(models.Model):
         db_table = 'Country'
 
 
-class FederativeRepublic(models.Model):
+class FederativeRepublic1(models.Model):
     id = models.IntegerField(primary_key=True)
     name_in_federation = models.CharField(max_length=50)
-    country_id = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country_id = models.ForeignKey(Country1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Federative_Republics'
 
 
-class City(models.Model):
+class City1(models.Model):
     id = models.IntegerField(primary_key=True)
     city_name = models.CharField(max_length=50)
     city_state = models.CharField(max_length=50)
-    country_id = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country_id = models.ForeignKey(Country1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'City'
 
 
-class Attendees(models.Model):
-    id = models.IntegerField(primary_key=True)
+class Attendees1(models.Model):
+    id = models.IntegerField(primary_key=True, )
     first_name = models.CharField(max_length=50)
     second_name = models.CharField(max_length=50)
+    age = models.IntegerField()
 
     class Meta:
         db_table = 'Attendees'
 
 
-class Address(models.Model):
+class Address1(models.Model):
     id = models.IntegerField(primary_key=True)
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     apartments = models.IntegerField()
-    customer_id = models.ForeignKey(Attendees, on_delete=models.CASCADE)
-    city_id = models.ForeignKey(City, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
+    city_id = models.ForeignKey(City1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Address'
 
 
-class Discount(models.Model):
+class Discount1(models.Model):
     id = models.IntegerField(primary_key=True)
     orders_number = models.IntegerField()
     discount = models.IntegerField()
-    customer_id = models.ForeignKey(Attendees, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Discount'
 
 
-class Events(models.Model):
+class OurEvents1(models.Model):
     id = models.IntegerField(primary_key=True)
     start_date = models.DateField()
     end_date = models.DateField()
     participants = models.IntegerField()
     price = models.IntegerField()
-    type_id = models.ForeignKey(EventTypes, on_delete=models.CASCADE)
-    payment_id = models.ForeignKey(FeeSchedule, on_delete=models.CASCADE)
+    type_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
+    payment_id = models.ForeignKey(FeeSchedule1, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'Events'
+        db_table = 'Our_Events'
 
 
-class ShowmanHouse(models.Model):
+class ShowmanHouse1(models.Model):
     id = models.IntegerField(primary_key=True)
     employees_number = models.IntegerField()
-    event_id = models.ForeignKey(EventTypes, on_delete=models.CASCADE)
+    event_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Showman_House'
 
 
-class Order(models.Model):
+class Orders1(models.Model):
     id = models.IntegerField(primary_key=True)
-    event_id = models.ForeignKey(EventTypes, on_delete=models.CASCADE)
-    customer_id = models.ForeignKey(Attendees, on_delete=models.CASCADE)
-    department_id = models.ForeignKey(ShowmanHouse, on_delete=models.CASCADE)
+    event_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(ShowmanHouse1, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'Order'
+        db_table = 'Orders'
 
 
-class Employees(models.Model):
+class Employees1(models.Model):
     id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=50)
     second_name = models.CharField(max_length=50)
     position = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=50)
-    department_id = models.ForeignKey(ShowmanHouse, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(ShowmanHouse1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Employees'
 
 
-class AdministrativeStuff(models.Model):
+class AdministrativeStuff1(models.Model):
     id = models.IntegerField(primary_key=True)
     cab_number = models.IntegerField()
-    employee_id = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    employee_id = models.ForeignKey(Employees1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Administrative_stuff'
 
 
-class EntertainingGroup(models.Model):
+class EntertainingGroup1(models.Model):
     id = models.IntegerField(primary_key=True)
     house_per_week = models.IntegerField()
-    employee_id = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    employee_id = models.ForeignKey(Employees1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Entertaining_group'
 
 
-class Trainee(models.Model):
+class Trainee1(models.Model):
     id = models.IntegerField(primary_key=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    employee_id = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    employee_id = models.ForeignKey(Employees1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Trainee'
 
 
+class Avatars1(models.Model):
+    id = models.IntegerField(primary_key=True)
+    avatar = models.ImageField(upload_to='C:/xd_team.project/showmanhouseback/oracledbimages/',
+                               default='C:/xd_team.project/showmanhouseback/oracledbimages/def/pepega.jpg')
+    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Avatars'

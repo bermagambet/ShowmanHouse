@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'corsheaders',
     'rest_framework',
+    'django_extensions',
     'rest_framework.authtoken',
-    'django_filters',
     'api',
 
 ]
@@ -84,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'XE',
-        'USER': 'system',
+        'USER': 'django2',
         'PASSWORD': 'hehkpop1212',
         'HOST': 'localhost',
         'PORT': '1521',

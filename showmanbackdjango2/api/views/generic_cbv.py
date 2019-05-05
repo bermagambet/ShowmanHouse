@@ -1,28 +1,35 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 from api.models import *
-# from api.serializers import CategorySerializer2, ProductSerializer
+from api.models import Attendees1 as Attendees, EventTypes1 as EventTypes
+from api.serializers import AttendeesSerializer, EventTypesSerializer
 # from api.filters import ProductFilter
 
 
 class EventTypesList(generics.ListCreateAPIView):
-    # serializer_class = CategorySerializer2
-    permission_classes = (IsAuthenticated,)
+    serializer_class = EventTypesSerializer
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return EventTypes.objects.for_user(self.request.user)
+        return EventTypes.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
+class EventTypesDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = EventTypesSerializer
+    def get_queryset(self):
+        queryset = EventTypes1.objects.get(id=self.kwargs.get('pk'))
+        return queryset
+
 class FeeScheduleList(generics.ListCreateAPIView):
-    # serializer_class = CategorySerializer2
-    permission_classes = (IsAuthenticated,)
+    # serializer_class = EventTypesSerializer
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return FeeSchedule.objects.for_user(self.request.user)
@@ -75,15 +82,21 @@ class CityList(generics.ListCreateAPIView):
 
 
 class AttendeesList(generics.ListCreateAPIView):
-    # serializer_class = CategorySerializer2
-    permission_classes = (IsAuthenticated,)
+    serializer_class = AttendeesSerializer
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Attendees.objects.for_user(self.request.user)
+        return Attendees.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
+class AttendeesDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AttendeesSerializer
+    def get_queryset(self):
+        queryset = Attendees.objects.get(id=self.kwargs.get('pk'))
+        return queryset
 
 class AddressList(generics.ListCreateAPIView):
     # serializer_class = CategorySerializer2
