@@ -13,34 +13,26 @@
 </ng-container>
 
 
- <ng-container *ngIf="isLogged">
-  CREATE CATEGORY:
-  <div>
-    <input type="text" [(ngModel)]="name" />
-    <button (click)="createCategory()">Create</button>
-  </div>
 
-  CATEGORIES
+<h1>EVENTTYPES:</h1>
   <ng-container *ngIf="!loading">
     Loading...
   </ng-container>
 
   <ng-container *ngIf="loading">
     <div>
-      <div *ngFor="let c of categories">
-      <span (click)="getProducts(c)">
-        <input type="text" [(ngModel)]="c.name" />
-      </span>
-        <span style="color: red" (click)="deleteCategory(c)"> Удалить</span>
-        <span style="color: green" (click)="updateCategory(c)"> Изменить</span>
+      <div *ngFor="let c of eventtypes">
+        <div>
+          {{c.event_title}}
+        </div>
       </div>
     </div>
   </ng-container>
 
   <br/>
-  PRODUCTS:
+  <h1> Attendees: </h1>
   <div>
-    <div *ngFor="let p of products">{{p.id}} - {{p.name}} - {{p.price}} - {{p.count}}</div>
+    <div *ngFor="let p of attendees">{{p.id}} - {{p.name}} - {{p.surname}}</div>
   </div>
 
   <div>

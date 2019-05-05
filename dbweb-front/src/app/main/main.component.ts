@@ -1,6 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../service-for-main.service';
+import { IEventsTypes, IAttendees } from './models';
 
 @Component({
   selector: 'app-main',
@@ -16,7 +17,8 @@ export class MainComponent implements OnInit {
   public loading = false;
 
   // public products: IProduct[] = [];
-
+  public eventtypes: IEventsTypes[] = [];
+  public attendees: IAttendees[]=[];
   public name: any = '';
 
   public isLogged = false;
@@ -40,12 +42,19 @@ export class MainComponent implements OnInit {
 
   }
 
-  // getCategories() {
-  //   this.provider.getCategories().then(res => {
-  //     this.categories = res;
-  //     this.loading = true;
-  //   });
-  // }
+  getEventTypes() {
+    this.provider.getEventTypes().then(res => {
+      this.eventtypes = res;
+      this.loading = true;
+    });
+  }
+
+  getAttendees() {
+    this.provider.getAttendees().then(res => {
+      this.attendees = res;
+      this.loading = true;
+    });
+  }
 
   // getProducts(category: ICategory) {
   //   this.provider.getProducts(category).then(res => {

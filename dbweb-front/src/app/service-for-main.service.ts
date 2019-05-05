@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IAuthResponse} from './main/models';
+import {IAuthResponse, IAttendees, IEventsTypes, IUser} from './main/models';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,25 @@ export class ServiceForMainService extends MainService {
     super(http);
   }
 
-  // getCategories(): Promise<ICategory[]> {
-  //   return this.get('http://localhost:8000/api/categories/', {});
-  // }
+  getAttendees(): Promise<IAttendees[]> {
+    return this.get('http://localhost:8000/api/attendees/', {});
+  }
 
+  getAttendee(): Promise<IAttendees[]> {
+    return this.get('http://localhost:8000/api/attendees/${id}/', {});
+  }
+
+  getEventTypes(): Promise<IEventsTypes[]> {
+    return this.get('http://localhost:8000/api/events/', {});
+  }
+
+  getEventType(): Promise<IEventsTypes[]> {
+    return this.get('http://localhost:8000/api/events/${id}/', {});
+  }
+
+  getUsers(): Promise<IUser[]> {
+    return this.get('http://localhost:8000/api/users/', {});
+  }
   // getProducts(category: ICategory): Promise<IProduct[]> {
   //   return this.get(`http://localhost:8000/api/categories/${category.id}/products/`, {});
   // }
