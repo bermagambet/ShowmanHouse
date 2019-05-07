@@ -7,7 +7,7 @@ width: 35%;
 padding-left: 6px;
 padding-top: 6px;
 }
-#header {height: 150px; width: 100%;  background: rgba(4, 2, 23, 0.075); background: url(C:\Users\Куаныш\Desktop\wallpaper_for_profile.png)}
+#header {height: 150px; width: 100%;  background: rgba(4, 2, 23, 0.075); background: url(\wallpaper_for_profile.png)}
 #login { position: relative;}
 #login ul {margin: 0; padding: 0; position: relative; top: -200px; float: right;}
 #login li {display: block; margin: 0 0 5px 0;  position: relative;}
