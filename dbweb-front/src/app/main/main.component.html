@@ -1,0 +1,142 @@
+<div id=body>
+    <div id="header">
+        <img src={{url}} width="180" height="140" id="logo">
+        
+        <div id="info">
+          
+          <ul id="listss">
+            <li>
+                <a>
+                  {{current_user.first_name}}
+                  <br> {{current_user.last_name}}
+                </a>
+              </li>
+          </ul>
+          <div id="buttons">
+          <button (click)="getOrders()" id="myorders" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">My Orders</button>
+          <button id="client" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">About Me</button>
+        </div>
+        </div>
+        
+        <div id="login">
+            
+    
+    
+        <ng-container *ngIf="!isLogged"> 
+        <ul>
+          <li> <input type="text" placeholder="Login" [(ngModel)]="login"/> </li>
+          <li> <input type="password" placeholder="Password" [(ngModel)]="password"/> </li>
+          <li> <button (click)="Mauth()">Sign in</button>  </li>
+        </ul>
+            </ng-container>
+      </div>
+    
+      </div>
+      <div id="main">
+        <div id="client-orders-info">
+          <div id="tableorders">
+              <table>
+                  <tr>
+                    <th>Order Id</th>
+                    <th>Event Id</th>
+                    <th>Customer Id</th>
+                    <th>Department Id</th>
+                  </tr>
+                <tr *ngFor="let c of orders">
+                  <td (click)="getOrder(c)">{{c.id}} </td>
+                  <td>{{c.event_id}} </td>
+                  <td>{{c.customer_id}} </td>
+                  <td>{{c.department_id}} </td>
+                </tr>                     
+          </table>
+          <table>
+              <tr>
+                <th>Order ID</th>
+                <th>Event Title</th>
+                <th>Customer Name</th>
+                <th>Employees in Department</th>
+              </tr>
+            <tr *ngFor="let c of ordersre">
+              <td>{{c.id}} </td>
+              <td> <a *ngFor="let d of eventtypes">
+                  <a *ngIf="d.id==order.event_id">
+                    {{d.event_title}} 
+                    <!-- {{i.surname}} -->
+                  </a>
+                </a>
+              </td>
+              <td> <a *ngFor="let x of attendees">
+                  <a *ngIf="x.id==order.customer_id">
+                    {{x.first_name}} 
+                    <!-- {{i.surname}} -->
+                  </a>
+                </a>
+              </td>
+              <td> <a *ngFor="let i of departments">
+                  <a *ngIf="i.id==order.department_id">
+                    {{i.employees_number}} 
+                    <!-- {{i.surname}} -->
+                  </a>
+                </a>
+              </td>
+            </tr>                     
+      </table>
+            </div>
+        </div>
+        <div id="events">
+            <ng-container *ngIf="isLogged">
+                <h1 id="headerh11">OFFERED TYPES OF EVENTS:</h1>
+                  <ng-container *ngIf="!loading">
+                    Loading...
+                  </ng-container>
+                  <ng-container *ngIf="loading">
+                    <div id="eventstable">
+                        <table>
+                            <tr>
+                              <th>Event Title</th>
+                              <th>Event Description</th>
+                              <th>Make an order</th>
+                            </tr>
+                          <tr *ngFor="let c of eventtypes">
+                            <td>{{c.event_title}} </td>
+                            <td>{{c.event_description}} </td>
+                            <td><button (click)="startMakingOrder(c)" class="ordersbuttons" style="width:55px; height: 17px;">Order</button></td>
+                          </tr>                     
+                    </table>
+                    </div>
+                  </ng-container>
+                  <br/>
+                </ng-container> 
+                <div id="makeorders">
+                    <ng-container *ngIf="isLogged">
+                        MAKE AN ORDER:
+                          <ng-container *ngIf="!loading">
+                            Loading...
+                          </ng-container>
+                          <ng-container *ngIf="loading">  
+                              <div id="makeorder1">
+                                <ul>
+                                  <li><input type="text" placeholder="Order ID" [(ngModel)]="morderid" /></li>
+                                  <li><input type="text" placeholder="Customer ID" [(ngModel)]="morder_customerid" /></li>
+                                  <li><input type="text" placeholder="Department ID" [(ngModel)]="morder_departmentid" /></li>
+                                </ul>
+                                <div id="makeorder2">
+                                <input type="radio" class="radiob" required name='morder_eventid' [value]='1' [(ngModel)]='morder_eventid'>Birthday
+                                <input type="radio" class="radiob" required name='morder_eventid' [value]='2' [(ngModel)]='morder_eventid'>New Year
+                                <br/>
+                                <button (click)="createOrder()" style="margin-left: 25px; margin-top: 10px;">Create</button>
+                                </div>
+                                </div>
+                            
+                          </ng-container>
+                          <br/>
+                        </ng-container> 
+                        
+        </div>
+      </div>
+    
+      <div id="footer">
+          <em> Copyright Database2019 </em>
+      </div>
+    
+    </div>

@@ -14,10 +14,16 @@
     token: string;
   }
 
+  export interface IDepartment {
+    id: number;
+    employees_number: number;
+    event_id: number;
+  }
+
   export interface IAttendees{
     id: number;
-    name: string;
-    surname: string;
+    first_name: string;
+    second_name: string;
   }
 
   export interface IEventsTypes{
@@ -28,8 +34,19 @@
 
   export interface IOrder{
     id: number;
+    event_id: number;
+    customer_id: number;
+    department_id: number;
   }
 
   export interface IUser{
     login: string;
+  }
+
+  export interface IRealUser{
+    id: number;
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;    
   }

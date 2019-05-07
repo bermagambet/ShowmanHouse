@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../service-for-main.service';
-import { IEventsTypes, IAttendees, IOrder } from './models';
+import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser } from './models';
 
 @Component({
   selector: 'app-main',
@@ -17,11 +17,25 @@ export class MainComponent implements OnInit {
   public loading = false;
 
   // public products: IProduct[] = [];
+  public morderid: any = '';
+  public morder_eventid: any = '';  
+  public morder_customerid: any = '';
+  public morder_departmentid: any = '';
+
   public eventtypes: IEventsTypes[] = [];
   public attendees: IAttendees[]=[];
+  public attendee: IAttendees;
+  public ordereventid: any = '';
   public orders: IOrder[]=[];
   public order: IOrder;
   public name: any = '';
+  public departments: IDepartment[] = [];
+  public department: IDepartment;
+  public users: IRealUser[] = [];
+  public current_user: IRealUser;
+  public workers: any = '';
+  public ordersre: IOrder[]=[];
+  public url = '';
 
   public isLogged = false;
 
@@ -31,8 +45,17 @@ export class MainComponent implements OnInit {
   constructor(private provider: ServiceForMainService) {
   }
 
-  ngOnInit() {
+  
 
+  ngOnInit() {
+    this.provider.getUsers().then(res => {
+      this.users = res;
+      console.log("users");
+      this.provider.getUser().then(res=>{
+        this.current_user = res;
+        console.log("user");
+      })
+    } ); 
     const token = localStorage.getItem('token');
     if (token) {
       this.isLogged = true;
@@ -44,11 +67,32 @@ export class MainComponent implements OnInit {
 
   }
 
+  findDepartment(department: IDepartment) {
+    return department.id === this.order.department_id;
+  }
+  
+  createOrder() {
+    if (this.morderid !== '' || this.morder_customerid !== '' || this.morder_departmentid !== '' || this.morder_eventid !== '') {
+      this.provider.createOrder(this.morderid, this.morder_eventid, this.morder_customerid, this.morder_departmentid).then(res => {
+        this.morderid = '';
+        this.morder_customerid = '';
+        this.morder_departmentid = '';
+        this.morder_eventid = '';
+        this.orders.push(res);
+      });
+    }
+  }
+
   getEventTypes() {
     this.provider.getEventTypes().then(res => {
       this.eventtypes = res;
       this.loading = true;
     });
+  }
+
+  startMakingOrder(event: IEventsTypes) {
+    this.ordereventid = event.id;
+    this.morder_eventid = this.ordereventid;
   }
 
   getAttendees() {
@@ -67,6 +111,18 @@ export class MainComponent implements OnInit {
   getOrder(order: IOrder){
     this.provider.getOrder(order).then(res => {
       this.order = res;
+      this.provider.getDepartments().then(res => {
+        this.departments = res;
+        // this.department = this.departments.find(this.findDepartment);
+        // this.workers = this.department.employees_number;
+        this.department =  this.departments.filter(x => x.id == this.order.department_id)[0];
+        this.workers = this.department.employees_number;
+        this.ordersre = [order];
+      });
+      this.provider.getAttendees().then(res => {
+        this.attendees = res;
+        console.log("attendees")
+      });
     });
   }
 
@@ -106,6 +162,7 @@ export class MainComponent implements OnInit {
   // }
 
   Mauth() {
+   
     if (this.login !== '' && this.password !== '') {
       this.provider.auth(this.login, this.password).then(res => {
         localStorage.setItem('token', res.token);

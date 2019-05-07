@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder} from './main/models';
+import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser} from './main/models';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,21 @@ export class ServiceForMainService extends MainService {
     return this.get('http://localhost:8000/api/attendees/', {});
   }
 
-  getAttendee(): Promise<IAttendees[]> {
-    return this.get('http://localhost:8000/api/attendees/${id}/', {});
+  getDepartments(): Promise<IDepartment[]> {
+    return this.get('http://localhost:8000/api/departments/', {});
   }
+
+  getAttendee(attendee: IAttendees): Promise<IAttendees[]> {
+    return this.get('http://localhost:8000/api/attendees/' + attendee.id + '/', {});
+  }
+
+  
+
+  // createOrder(id: number, event_id: number, customer_id: number, department_id:number): Promise<IOrder> {
+  //   return this.post('http://localhost:8000/api/orders/', {
+  //     name: name
+  //   });
+  // }
 
   getEventTypes(): Promise<IEventsTypes[]> {
     return this.get('http://localhost:8000/api/events/', {});
@@ -47,8 +59,12 @@ export class ServiceForMainService extends MainService {
     return this.get('http://localhost:8000/api/events/${id}/', {});
   }
 
-  getUsers(): Promise<IUser[]> {
+  getUsers(): Promise<IRealUser[]> {
     return this.get('http://localhost:8000/api/users/', {});
+  }
+
+  getUser(): Promise<IRealUser> {
+    return this.get('http://localhost:8000/api/users/current/', {});
   }
   // getProducts(category: ICategory): Promise<IProduct[]> {
   //   return this.get(`http://localhost:8000/api/categories/${category.id}/products/`, {});
@@ -81,4 +97,7 @@ export class ServiceForMainService extends MainService {
     return this.post('http://localhost:8000/api/logout/', {});
   }
 
+  getImage(url: string): Promise<Blob> {
+    return this.get(`${url}`, {responseType: 'blob'})
+  }
 }
