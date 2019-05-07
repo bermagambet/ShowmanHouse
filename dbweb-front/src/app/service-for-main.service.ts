@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser} from './main/models';
+import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser, IAddress, IDiscount} from './main/models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,14 @@ export class ServiceForMainService extends MainService {
 
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  getAddress(attendee: IAttendees):Promise<IAddress> {
+    // ТУТ ДОЛЖЕН БЫТЬ ЮРЛ return this.get('http://localhost:8000/api/address/attende.id/', {})
+  }
+
+  getDiscount(attendee: IAttendees):Promise<IDiscount> {
+    // ТУТ ДОЛЖЕН БЫТЬ ЮРЛ return this.get('http://localhost:8000/api/discount/attende.id/', {})
   }
 
   getAttendees(): Promise<IAttendees[]> {

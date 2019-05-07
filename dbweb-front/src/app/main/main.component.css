@@ -7,7 +7,7 @@ width: 35%;
 padding-left: 6px;
 padding-top: 6px;
 }
-#header {height: 150px; width: 100%;  background: rgba(4, 2, 23, 0.075)}
+#header {height: 150px; width: 100%;  background: rgba(4, 2, 23, 0.075); background: url(C:\Users\Куаныш\Desktop\wallpaper_for_profile.png)}
 #login { position: relative;}
 #login ul {margin: 0; padding: 0; position: relative; top: -200px; float: right;}
 #login li {display: block; margin: 0 0 5px 0;  position: relative;}
@@ -17,6 +17,7 @@ padding-top: 6px;
     font-style: oblique;
 }
 #client {position: relative; top: 35px; right: 90px;}
+
 
 
 #info {display: block;  position: relative; top: -130px; left: 190px; width: 300px;}
@@ -98,6 +99,7 @@ border: 1px solid black;
 #makeorders {
     font-weight: bold;
     font-size: 20px;
+    color: rgb(137, 167, 211);
     position: relative;
     left: 860px;
     top: -150px;

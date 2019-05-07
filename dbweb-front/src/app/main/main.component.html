@@ -14,14 +14,10 @@
           </ul>
           <div id="buttons">
           <button (click)="getOrders()" id="myorders" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">My Orders</button>
-          <button id="client" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">About Me</button>
+          <button (click)="getUserAddress()" id="client" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">About Me</button>
         </div>
         </div>
-        
         <div id="login">
-            
-    
-    
         <ng-container *ngIf="!isLogged"> 
         <ul>
           <li> <input type="text" placeholder="Login" [(ngModel)]="login"/> </li>
@@ -35,6 +31,9 @@
       <div id="main">
         <div id="client-orders-info">
           <div id="tableorders">
+            <div id="myordersid">
+                <ng-container *ngIf="!aboutme">
+                    <ng-container *ngIf="myorders">
               <table>
                   <tr>
                     <th>Order Id</th>
@@ -81,6 +80,22 @@
               </td>
             </tr>                     
       </table>
+    </ng-container>
+  </ng-container>
+    </div>
+    <div id="aboutmeid">
+      <ng-container *ngIf="aboutme">
+          <ng-container *ngIf="!myorders">
+            <h2>ЫЫЫ ДА ДА Я</h2>
+            <br>
+            {{address.district}}
+            <br>
+            {{address.street}}
+            <br>
+            {{address.apartments}}
+          </ng-container>
+      </ng-container>
+    </div>
             </div>
         </div>
         <div id="events">
@@ -124,6 +139,9 @@
                                 <input type="radio" class="radiob" required name='morder_eventid' [value]='1' [(ngModel)]='morder_eventid'>Birthday
                                 <input type="radio" class="radiob" required name='morder_eventid' [value]='2' [(ngModel)]='morder_eventid'>New Year
                                 <br/>
+                                <!-- <div id="ordercost" [(ngModel)=""]>
+                                  ЦЕНЫ ИВЕНТА НЕ ЗНАЮ. ДОЛГО ДУМАЛ КАК МОЖНО СДЕЛАТЬ НО НЕ ДОДУМАЛ
+                                </div> -->
                                 <button (click)="createOrder()" style="margin-left: 25px; margin-top: 10px;">Create</button>
                                 </div>
                                 </div>

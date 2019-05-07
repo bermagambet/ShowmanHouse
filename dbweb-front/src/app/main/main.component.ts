@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../service-for-main.service';
-import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser } from './models';
+import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser, IAddress, IDiscount } from './models';
 
 @Component({
   selector: 'app-main',
@@ -14,14 +14,14 @@ export class MainComponent implements OnInit {
   public stringArray: string[] = [];
 
   // public categories: ICategory[] = [];
+  public aboutme = false;
+  public myorders = false;
   public loading = false;
-
   // public products: IProduct[] = [];
   public morderid: any = '';
   public morder_eventid: any = '';  
   public morder_customerid: any = '';
   public morder_departmentid: any = '';
-
   public eventtypes: IEventsTypes[] = [];
   public attendees: IAttendees[]=[];
   public attendee: IAttendees;
@@ -36,7 +36,10 @@ export class MainComponent implements OnInit {
   public workers: any = '';
   public ordersre: IOrder[]=[];
   public url = '';
-
+  public addresses: IAddress[]=[];
+  public address:IAddress;
+  public discounts: IDiscount[]=[];
+  public discount: IDiscount;
   public isLogged = false;
 
   public login = '';
@@ -60,13 +63,25 @@ export class MainComponent implements OnInit {
     if (token) {
       this.isLogged = true;
     }
-
     if (this.isLogged) {
       this.getEventTypes();
     }
 
   }
 
+  getUserAddress(attendee: IAttendees){
+    this.provider.getAddress(attendee).then(res => {
+      this.address = res;
+      this.aboutme=true;
+      this.myorders=false;
+    });
+  }
+
+  getUserDiscount(attendee: IAttendees){
+    this.provider.getDiscount(attendee).then(res => {
+      this.discount = res;
+    });
+  }
   findDepartment(department: IDepartment) {
     return department.id === this.order.department_id;
   }
@@ -105,6 +120,8 @@ export class MainComponent implements OnInit {
   getOrders() {
     this.provider.getOrders().then(res => {
       this.orders = res;
+      this.aboutme=false;
+      this.myorders=true;
     });
   }
 
