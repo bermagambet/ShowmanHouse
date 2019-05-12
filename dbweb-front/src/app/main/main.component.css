@@ -60,9 +60,13 @@ border: 1px solid black;
 }
 #footer {
     border-top: 2px solid blue;
-    position: relative;
-    display: block;
     text-align: center;
+    position: relative;
+    margin-top: -2%;
+    padding-top: 2px;
+    margin-left: -34.5%;
+    width: 156.5%;
+    float: left;
 }
 #clients {
     float: left;
@@ -100,7 +104,7 @@ border: 1px solid black;
     font-size: 20px;
     position: relative;
     left: 860px;
-    top: -150px;
+    top: -135px;
 }
 
 #makeorder2 {
@@ -139,10 +143,24 @@ button {
 }
 
 
-#eventstable {
+.eventtable {
     text-align: center;
-    padding-left: 22%;
+    padding: 10%;
+    padding-left: 18%;
     padding-top: 10px;
+    margin: 5%;    
+    font-size: 18px;
+    background-color: teal;
+    height: 1.5%;
+    width: 60%;
+    padding-bottom: 11%;
+    border-radius: 5px;
+    margin-bottom: 2%;
+}
+
+.eventtable2 {
+    overflow-y: scroll;
+    height: 500px;
 }
 
 #events{
@@ -150,11 +168,151 @@ button {
     border: 3px solid lightgoldenrodyellow;
     height: 590px;
     margin-top: 1.5%;
+    margin-bottom: 1%;
 }
 
 .radiob input[type="radiobutton"]{
     font-size: 10px;
 }
 #headerh11 {
-    padding-left: 22%;
+    padding-left: 22%;  
+}
+#cusitd {
+    font-size: 17px;
+}
+#depitd {
+    font-size: 17px;
+}
+
+.infotext{
+    background-color: teal;
+    font-size: 19px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 2px solid red;
+    float: left;
+}
+
+.infobox{
+    background-color: cadetblue;
+    border: 2px solid lightslategray;
+    border-radius: 5px;
+    margin: 4px;
+    padding-left: 10px;
+    padding-bottom: 170px;   
+}
+
+.searchfilter{
+    text-align: center;
+    margin: 2px;
+    padding: 3px;
+}
+
+.searchfilter a{
+    margin: 2px;
+}
+
+#bto {
+    margin: 4px;
+}
+#fil {
+    margin: 4px;
+}
+
+.discocount {
+    font-size: 17px;
+    background-color: cornflowerblue;
+}
+
+#makeorders {
+    margin-top: -63%;
+    padding-top: 5%;
+}
+
+.updateb {
+    font-size: 240%;
+    border-radius: 4px;
+    margin-right: 25%;
+}
+
+.infotext2{
+    background-color: teal;
+    font-size: 19px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 2px solid red;
+    float: left;
+}
+
+.infotext2 input[type="text"]{
+    font-size: 21px;
+}
+
+.infotext2{
+    padding-right: 25%;
+}
+
+.gmi{
+    background-color: lightseagreen;
+    border: 1px solid red;
+}
+
+.orderstextb{
+    background-color: lightslategrey;
+    border: 2px solid red;
+    border-radius: 3px;
+}
+
+/* #orderstextb2{
+    padding-top: -20px;
+    margin-top: -20px;
+} */
+
+.orderstextb3{
+    padding-top: 5px;
+}
+
+.radiobb{
+    background-color: darkmagenta;
+}
+
+#ppp{
+    margin-left: -39px;
+    width: 21%;
+    text-align: center;
+    background-color: darkslategrey;
+    border: 2px solid red;
+}
+
+.ordermli{
+    background-color: thistle;
+    width: 21.5%;
+    margin-left: -4px;
+}
+
+.ordermli li{
+    border: 2px solid red;
+}
+
+#payp{
+    align-content: center;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 3px;
+    margin-left: 4%;
+}
+
+#makeanorder{
+    background-color: dimgray;
+    border: 2px solid red;
+}
+
+.confirmation{
+    position: absolute;
+    text-align: left;
+}
+
+.coe{
+    position: relative;
+    float:left;
 }

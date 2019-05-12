@@ -4,11 +4,11 @@ import { NgModule,ClassProvider, } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
-import {ServiceForMainService} from './service-for-main.service';
+import {ServiceForMainService} from './shared/services/service-for-main.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {AuthInterceptor} from './main/AuthInterceptor';
-import { MainService } from './main.service';
+import {AuthInterceptor} from './AuthInterceptor';
+import { MainService } from './shared/services/main.service';
 @NgModule({
   declarations: [
     AppComponent,
