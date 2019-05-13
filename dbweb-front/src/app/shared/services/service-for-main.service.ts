@@ -1,7 +1,9 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees, IAvatar} from 'C:/xd_team.project/showmanhouseback/ShowmanHouse/dbweb-front/src/app/shared/modules/models';
+import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, 
+IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees, IAvatar} 
+from '../modules/models';
 
 @Injectable({
   providedIn: 'root'
