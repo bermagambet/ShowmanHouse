@@ -111,6 +111,6 @@
 
   export interface IAvatar{
     id: number;
-    avatar: ImageBitmap;
+    avatar: string;
     customer_id: number;
   }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,ClassProvider, } from '@angular/core';
+import { NgModule,ClassProvider, Sanitizer, } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './AuthInterceptor';
 import { MainService } from './shared/services/main.service';
+import { platformBrowser } from '@angular/platform-browser/src/browser';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,8 @@ import { MainService } from './shared/services/main.service';
   imports: [
     FormsModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserModule,
   ],
   providers: [
     ServiceForMainService,

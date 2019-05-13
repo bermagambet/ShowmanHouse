@@ -1,7 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Sanitizer, SecurityContext} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../shared/services/service-for-main.service';
-import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser, ICity, IAddress, ICountry, IDiscount, IFeeSchedule, IPayment, IEmployees } from '../shared/modules/models';
+import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser, ICity, IAddress, ICountry, IDiscount, IFeeSchedule, IPayment, IEmployees, IAvatar } from '../shared/modules/models';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main',
@@ -74,11 +75,13 @@ export class MainComponent implements OnInit {
   public needdd: any = '';
   public isLogged = false;
   public item5:  IDiscount;
+  public item100: IAvatar;
   public item6:  IDiscount;
 
 
   public selectedorder: IOrder;
   public nextorderid: any = '';
+  public thenewsrc: any ='';
   public neededdepartment: IDepartment;
   public login = '';
   public password = '';
@@ -104,16 +107,20 @@ export class MainComponent implements OnInit {
   public eventddd: string;
 
   public customer = false;
+  public avatars: IAvatar[]=[];
+  public avatar: IAvatar;
 
-  constructor(private provider: ServiceForMainService) {
+  constructor(private provider: ServiceForMainService, private sanitizer: DomSanitizer){
   }
-
+  
   
 
   ngOnInit() {
+
     this.provider.getAttendees().then(res => {
       this.attendees = res;
       this.getEmployees();
+      this.getAvatars();
     })
     
     this.provider.getUsers().then(res => {
@@ -144,6 +151,12 @@ export class MainComponent implements OnInit {
       this.getEventTypes();
     }
 
+  }
+
+  getAvatars(){
+    this.provider.getAvatars().then(res=>{
+      this.avatars = res;
+    });
   }
 
   createEvent(){
@@ -225,8 +238,14 @@ export class MainComponent implements OnInit {
     });
   }
 
+  getBI(){
+    this.thenewsrc = this.sanitizer.bypassSecurityTrustStyle('linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${this.thenewsrc})');
+  }
+
   getOrders() {
     this.myorderstrue = true;
+    this.thenewsrc =this.item100.avatar.replace('http://localhost:8000/media/', 'C:/xd_team.project/showmanhouseback/oracledbimages/'); 
+    this.thenewsrc= this.sanitizer.sanitize(SecurityContext.STYLE, 'url(' + this.thenewsrc + ')');
     this.myinfotrue = false;
     this.neworder2 = this.neworders;
     this.neworder2.forEach(element => {
@@ -363,7 +382,12 @@ export class MainComponent implements OnInit {
     })[0];
     if(this.item1 == this.item2 && fname != '' && sname != ''){
       this.currencustomer = this.item1;
+      var ccc = this.currencustomer.id;
       this.currentcustomerod = this.currencustomer.id;
+      this.item100 = this.avatars.filter(function(item) {
+        return item.customer_id = ccc;
+      })[0];
+
       console.log(this.item1.first_name)
       console.log(this.item1.second_name)
 

@@ -305,6 +305,12 @@ button {
 #makeanorder{
     background-color: dimgray;
     border: 2px solid red;
+    margin-right: 10%;
+}
+
+.order1{
+    margin-right: 1%;   
+    padding-right: 5%;
 }
 
 .confirmation{

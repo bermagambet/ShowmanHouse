@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
-import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees} from 'C:/xd_team.project/showmanhouseback/ShowmanHouse/dbweb-front/src/app/shared/modules/models';
+import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees, IAvatar} from 'C:/xd_team.project/showmanhouseback/ShowmanHouse/dbweb-front/src/app/shared/modules/models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,14 @@ export class ServiceForMainService extends MainService {
   getAttendees(): Promise<IAttendees[]> {
     return this.get('http://localhost:8000/api/attendees/', {});
   }
+
+  getAvatars(): Promise<IAvatar[]> {
+    return this.get('http://localhost:8000/api/avatar/', {});
+  } 
+
+  getAvatar(avatar: IAvatar): Promise<IAvatar> {
+    return this.get('http://localhost:8000/api/avatar/' + avatar.id + '/', {});
+  } 
 
   getDepartments(): Promise<IDepartment[]> {
     return this.get('http://localhost:8000/api/departments/', {});

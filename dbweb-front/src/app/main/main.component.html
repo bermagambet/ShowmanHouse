@@ -1,7 +1,8 @@
 <div id=body>
     <div id="header">
-        <img src={{url}} width="180" height="140" id="logo">
-        
+        <img src='' width="180" height="140" id="logo">
+        <!-- <div [ngStyle]="{'background-image': 'url(C:/xd_team.project/showmanhouseback/oracledbimages/Alixan_Bokeyxan.jpg)'}"></div> -->
+        <!-- <div *ngIf="thenewsrc" [style.background-image]="thenewsrc"></div> -->
         <div id="info">
             <ng-container *ngIf="isLogged">
           <ul id="listss">
@@ -195,13 +196,13 @@
                 </ng-container> 
                 <div id="makeorders">
                     <ng-container *ngIf="isLogged">
-                      <ng-container *ngIf="customer">
+                      <ng-container class="order1" *ngIf="customer">
                       
                         <a id="makeanorder">MAKE AN ORDER:</a>
                           <ng-container *ngIf="!loading">
                             Loading...
                           </ng-container>
-                          <ng-container *ngIf="loading">  
+                          <ng-container class="order1" *ngIf="loading">  
                               <div id="makeorder1">
                                 <div class="ordermli">
                                 <ul>
