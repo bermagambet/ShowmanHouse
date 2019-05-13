@@ -1,261 +1,257 @@
 <div id=body>
-    <div id="header">
-        <img src='' width="180" height="140" id="logo">
-        <!-- <div [ngStyle]="{'background-image': 'url(C:/xd_team.project/showmanhouseback/oracledbimages/Alixan_Bokeyxan.jpg)'}"></div> -->
-        <!-- <div *ngIf="thenewsrc" [style.background-image]="thenewsrc"></div> -->
-        <div id="info">
-            <ng-container *ngIf="isLogged">
+  <div id="header">
+      <img src='' id="logo">
+      <!-- <div [ngStyle]="{'background-image': 'url(C:/xd_team.project/showmanhouseback/oracledbimages/Alixan_Bokeyxan.jpg)'}"></div> -->
+      <!-- <div *ngIf="thenewsrc" [style.background-image]="thenewsrc"></div> -->
+      <div id="info">
+          <ng-container *ngIf="isLogged">
+        <ul id="listss">
+          <li>
+              <a>
+                {{current_user.first_name}}
+                <br> {{current_user.last_name}}
+              </a>
+            </li>
+        </ul>
+      </ng-container>
+      <ng-container *ngIf="!isLogged">
           <ul id="listss">
             <li>
                 <a>
-                  {{current_user.first_name}}
-                  <br> {{current_user.last_name}}
+                  Guest
+                  <br> Guest
                 </a>
               </li>
           </ul>
         </ng-container>
-        <ng-container *ngIf="!isLogged">
-            <ul id="listss">
-              <li>
-                  <a>
-                    Guest
-                    <br> Guest
-                  </a>
-                </li>
-            </ul>
+
+        <div id="buttons">
+          <ng-container *ngIf="customer">
+        <button (click)="getOrders2()" (click)="getOrders()" (click)="getDiscounts()" id="myorders" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">My Orders</button>
+        <button (click)="getInfo()" id="client" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">About Me</button>
+      </ng-container>
+      </div>
+      </div>
+      
+      <div id="login">
+      <ng-container *ngIf="!isLogged"> 
+      <ul>
+        <li> <input type="text" placeholder="Login" [(ngModel)]="login"/> </li>
+        <li> <input type="password" placeholder="Password" [(ngModel)]="password"/> </li>
+        <li> <button (click)="Mauth()">Sign in</button>  </li>
+      </ul>
           </ng-container>
-
-          <div id="buttons">
-            <ng-container *ngIf="customer">
-          <button (click)="getOrders2()" (click)="getOrders()" (click)="getDiscounts()" id="myorders" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">My Orders</button>
-          <button (click)="getInfo()" id="client" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-style: italic; text-decoration-style:wavy;">About Me</button>
-        </ng-container>
-        </div>
-        </div>
-        
-        <div id="login">
-        <ng-container *ngIf="!isLogged"> 
-        <ul>
-          <li> <input type="text" placeholder="Login" [(ngModel)]="login"/> </li>
-          <li> <input type="password" placeholder="Password" [(ngModel)]="password"/> </li>
-          <li> <button (click)="Mauth()">Sign in</button>  </li>
-        </ul>
-            </ng-container>
-      </div>
-    
-      </div>
-      <div id="main">
-          
-        <div id="client-orders-info">
-            <ng-container *ngIf="myorderstrue">
-
-          <div id="tableorders">
-              <a>Select an Order by ID: </a><select [(ngModel)]="selectedorderid" (click)="orderOrders()">
-                  <option *ngFor="let item of neworders" [value]="item">
-                      {{item}}                
-                  </option>
-                </select>
-                <br>
-                <ng-container *ngFor="let item of orders">
-                  <a>Order ID: {{item.id}} - </a><a class="gmi" (click)="getOrder(item)"> Get More Info </a>
-                  <br>
-                </ng-container>
-
-          <ng-container class="orderstextb3" *ngFor="let c of ordersre">
-               <a *ngFor="let d of eventtypes">
-                  <a class="orderstextb"*ngIf="d.id==order.event_id">
-                    The title of events is: {{d.event_title}} 
-                  </a>
-                  <br>
-                  <a class="orderstextb" *ngIf="d.id==order.event_id">
-                      The description of events is: {{d.event_description}} 
-                      <br>
-                      ----------------------
-                    </a>
-                </a>
-              <a *ngFor="let x of attendees">
-                  <a class="orderstextb" id="orderstextb2" *ngIf="x.id==order.customer_id">
-                    ----------------------
-                    <br>
-                    The name of corresponding customer is: {{x.first_name}} 
-                  </a>
-                </a>
-              <a *ngFor="let i of departments">
-                  <a class="orderstextb"*ngIf="i.id==order.department_id">
-                    The total employees in corresponding department is: {{i.employees_number}} 
-                    <!-- {{i.surname}} -->
-                  </a>
-                </a>
-              </ng-container>
-      <br>
-      <div class="discocount">
-      <a>Your discount is {{item6.discount}}</a>
-
-      <br>
-
-      <a>Your orders number is {{item6.orders_number}}</a>
-      </div>
-      <br>
-
-            </div>
-          </ng-container>
-<ng-container *ngIf="myinfotrue">
-  <ng-container class="infotext" *ngIf="!updating">
-    <div class="infobox">
-    <br>
-    <a class="infotext">Your country is {{custcountry}}</a>
-    <br>
-    <a class="infotext">Your state is {{custcitystate}}</a>
-    <br>
-    <a class="infotext">Your city is {{custcity}}</a>
-    <br>
-    <a class="infotext">Your district is {{custdistrict}}</a>
-    <br>
-    <a class="infotext">Your street is {{custstreet}}</a>
-    <br>
-    <a class="infotext">Your apartments is {{custapart}}</a>
-    <br>
     </div>
-  </ng-container>
-  <ng-container class="infobox2" *ngIf="updating">
-      <a class="infotext2">Your country is <input type="text"  [(ngModel)]="custcountry"></a>
-      <br>
-        <a class="infotext2">Your state is <input type="text"  [(ngModel)]="custcitystate"></a>
-        <br>
-          <a class="infotext2">Your city is <input type="text"  [(ngModel)]="custcity"></a>
-          <br>
-            <a class="infotext2">Your district is <input type="text"  [(ngModel)]="custdistrict"></a>
-            <br>
-            <a class="infotext2">Your street is <input type="text"  [(ngModel)]="custstreet"></a>
-            <br>
-              <a class="infotext2">Your street is <input type="text"  [(ngModel)]="custapart"> </a>
-  </ng-container>
-  <button class="updateb" (click)="updateAddress()" (click)="updateAddress1()" (click)="updateAddress2()">Update</button>
   
+    </div>
+    <div id="main">
+        
+      <div id="client-orders-info">
+          <ng-container *ngIf="myorderstrue">
+
+        <div id="tableorders">
+            <a>Select an Order by ID: </a><select [(ngModel)]="selectedorderid" (click)="orderOrders()">
+                <option *ngFor="let item of neworders" [value]="item">
+                    {{item}}                
+                </option>
+              </select>
+              <br>
+              <ng-container *ngFor="let item of orders">
+                <a>Order ID: {{item.id}} - </a><a class="gmi" (click)="getOrder(item)"> Get More Info </a>
+                <br>
+              </ng-container>
+
+        <ng-container class="orderstextb3" *ngFor="let c of ordersre">
+             <a *ngFor="let d of eventtypes">
+                <a class="orderstextb"*ngIf="d.id==order.event_id">
+                  The title of events is: {{d.event_title}} 
+                </a>
+                <br>
+                <a class="orderstextb" *ngIf="d.id==order.event_id">
+                    The description of events is: {{d.event_description}} 
+                    <br>
+                    ----------------------
+                  </a>
+              </a>
+            <a *ngFor="let x of attendees">
+                <a class="orderstextb" id="orderstextb2" *ngIf="x.id==order.customer_id">
+                  ----------------------
+                  <br>
+                  The name of corresponding customer is: {{x.first_name}} 
+                </a>
+              </a>
+            <a *ngFor="let i of departments">
+                <a class="orderstextb"*ngIf="i.id==order.department_id">
+                  The total employees in corresponding department is: {{i.employees_number}} 
+                  <!-- {{i.surname}} -->
+                </a>
+              </a>
+            </ng-container>
+    <br>
+    <div class="discocount">
+    <a>Your discount is {{item6.discount}}</a>
+
+    <br>
+
+    <a>Your orders number is {{item6.orders_number}}</a>
+    </div>
+    <br>
+
+          </div>
+        </ng-container>
+<ng-container *ngIf="myinfotrue">
+<ng-container class="infotext" *ngIf="!updating">
+  <div class="infobox">
+  <br>
+  <a class="infotext">Your country is {{custcountry}}</a>
+  <br>
+  <a class="infotext">Your state is {{custcitystate}}</a>
+  <br>
+  <a class="infotext">Your city is {{custcity}}</a>
+  <br>
+  <a class="infotext">Your district is {{custdistrict}}</a>
+  <br>
+  <a class="infotext">Your street is {{custstreet}}</a>
+  <br>
+  <a class="infotext">Your apartments is {{custapart}}</a>
+  <br>
+  </div>
+</ng-container>
+<ng-container class="infobox2" *ngIf="updating">
+    <a class="infotext2">Your country is <input type="text"  [(ngModel)]="custcountry"></a>
+    <br>
+      <a class="infotext2">Your state is <input type="text"  [(ngModel)]="custcitystate"></a>
+      <br>
+        <a class="infotext2">Your city is <input type="text"  [(ngModel)]="custcity"></a>
+        <br>
+          <a class="infotext2">Your district is <input type="text"  [(ngModel)]="custdistrict"></a>
+          <br>
+          <a class="infotext2">Your street is <input type="text"  [(ngModel)]="custstreet"></a>
+          <br>
+            <a class="infotext2">Your street is <input type="text"  [(ngModel)]="custapart"> </a>
+</ng-container>
+<button class="updateb" (click)="updateAddress()" (click)="updateAddress1()" (click)="updateAddress2()">Update</button>
+
 </ng-container>
 <ng-container class="coe" *ngIf="!customer">
-                      
-    <a>MAKE AN EVENT:</a>
-            <ul class="coe">
-              <li><input type="text"  [(ngModel)]="eventiddd"/></li>
-              <li>-----------------</li>
-              <li><input type="text" [(ngModel)]="eventttt"/></li>
-              <li>-----------------</li>
-              <li><input type="text"  [(ngModel)]="eventddd"/></li>
-            </ul>
-            <button (click)="createEvent()">Create</button>
-    
-        
+                    
+  <a>MAKE AN EVENT: </a>
+          <ul class="coe">
+            <li><input type="text"  [(ngModel)]="eventiddd"/></li>
+            <li>-----------------</li>
+            <li><input type="text" [(ngModel)]="eventttt"/></li>
+            <li>-----------------</li>
+            <li><input type="text"  [(ngModel)]="eventddd"/></li>
+          </ul>
+          <button (click)="createEvent()">Create</button>
+  
+      
 </ng-container>
 
-        </div>
-        <div id="events">
-            <ng-container *ngIf="isLogged">
-                <h1 id="headerh11">OFFERED TYPES OF EVENTS:</h1>
-                  <ng-container *ngIf="!loading">
-                    Loading...
-                  </ng-container>
-                  <ng-container *ngIf="loading">
-                      <br/>
-                      <div class="searchfilter">
-                      <a>Order by </a>
-                      <a>id:</a>
-                      <input type="checkbox"  (click)="makeOrderID()">
-                      <a>name:</a>
-                      <input type="checkbox"  (click)="makeOrderName()">
-                      <a>reverse:</a>
-                      <input type="checkbox"  (click)="makeOrderReverse()">
-                      <br/>
-                      <span>
-                        <input type="text" placeholder="Search..." [(ngModel)]="suffix">
-                      </span> 
-                      <span (click)="makeFilter()">
-                        <button id="fil">Filter</button>
-                      </span>
-                      <span (click)="getEventTypes()">
-                        <button id="bto">Back to origin</button>
-                      </span>
-                      </div>
-                      <div class="eventtable2">
-                    <div class="eventtable" *ngFor="let c of eventtypes">
-                              <a class="eventstable">Event Title: {{c.event_title}} </a>
-                              <br>
-                              <a class="eventstable">Event Description: {{c.event_description}} </a>
-                              <br>
-                              <ng-container *ngIf="customer">
-                              <a class="eventstable">Make an order: <button (click)="startMakingOrder(c)" (click)="maxOrder()" class="ordersbuttons" style="width:55px; height: 17px;">Order</button></a>
-                              <br>
-                            </ng-container>
-                      </div>
-                      </div>
-                    <div id="footer">
-                        <em> Copyright Database2019 </em>
+      </div>
+      <div id="events">
+          <ng-container *ngIf="isLogged">
+              <h1 id="headerh11">OFFERED TYPES OF EVENTS:</h1>
+                <ng-container *ngIf="!loading">
+                  Loading...
+                </ng-container>
+                <ng-container *ngIf="loading">
+                    <br/>
+                    <div class="searchfilter">
+                    <a>Order by </a>
+                    <a>id:</a>
+                    <input type="checkbox"  (click)="makeOrderID()">
+                    <a>name:</a>
+                    <input type="checkbox"  (click)="makeOrderName()">
+                    <a>reverse:</a>
+                    <input type="checkbox"  (click)="makeOrderReverse()">
+                    <br/>
+                    <span>
+                      <input type="text" placeholder="Search..." [(ngModel)]="suffix">
+                    </span> 
+                    <span (click)="makeFilter()">
+                      <button id="fil">Filter</button>
+                    </span>
+                    <span (click)="getEventTypes()">
+                      <button id="bto">Back to origin</button>
+                    </span>
                     </div>
-                  </ng-container>
-                  <br/>
-                </ng-container> 
-                <div id="makeorders">
-                    <ng-container *ngIf="isLogged">
-                      <ng-container class="order1" *ngIf="customer">
+                    <div class="eventtable2">
+                  <div class="eventtable" *ngFor="let c of eventtypes">
+                            <a class="eventstable">Event Title: {{c.event_title}} </a>
+                            <br>
+                            <a class="eventstable">Event Description: {{c.event_description}} </a>
+                            <br>
+                            <ng-container *ngIf="customer">
+                            <a class="eventstable">Make an order: <button (click)="startMakingOrder(c)" (click)="maxOrder()" class="ordersbuttons" style="width:55px; height: 17px;">Order</button></a>
+                            <br>
+                          </ng-container>
+                    </div>
+                    </div>
+                  <div id="footer">
+                      <em> Copyright Database2019 </em>
+                  </div>
+                </ng-container>
+                <br/>
+              </ng-container> 
+              <div id="makeorders">
+                  <ng-container *ngIf="isLogged">
+                    <ng-container class="order1" *ngIf="customer">
+                    
+                      <a id="makeanorder">MAKE AN ORDER:</a>
+                        <ng-container *ngIf="!loading">
+                          Loading...
+                        </ng-container>
+                        <ng-container class="order1" *ngIf="loading">  
+                            <div id="makeorder1">
+                              <div class="ordermli">
+                              <ul>
+                                <li><a id="cusitd">Your order ID is {{nextorderid}} </a></li>
+                                <li>-----------------</li>
+                                <li><a id="cusitd">Your customer ID is {{currentcustomerod}} </a></li>
+                                <li>-----------------</li>
+                                <li><a id="depitd">Department which <br> works with the event {{morder_departmentid}} </a></li>
+                              </ul>
+                              </div>
                       
-                        <a id="makeanorder">MAKE AN ORDER:</a>
-                          <ng-container *ngIf="!loading">
-                            Loading...
-                          </ng-container>
-                          <ng-container class="order1" *ngIf="loading">  
-                              <div id="makeorder1">
-                                <div class="ordermli">
-                                <ul>
-                                  <li><a id="cusitd">Your order ID is {{nextorderid}} </a></li>
-                                  <li>-----------------</li>
-                                  <li><a id="cusitd">Your customer ID is {{currentcustomerod}} </a></li>
-                                  <li>-----------------</li>
-                                  <li><a id="depitd">Department which <br> works with the event {{morder_departmentid}} </a></li>
-                                </ul>
-                                </div>
-                        
-                                <div id="makeorder2">
-                                  <ng-container class="radiobb">
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='1' [(ngModel)]='morder_eventid'>Birthday
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='2' [(ngModel)]='morder_eventid'>New Year
-                                <br/>
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='3' [(ngModel)]='morder_eventid'>Holidays
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='4' [(ngModel)]='morder_eventid'>Birthday2
-                                <br/>
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='5' [(ngModel)]='morder_eventid'>NewYear  
-                                <input type="radio" class="radiob" required name='morder_eventid' [value]='6' [(ngModel)]='morder_eventid'>Holidays2
-                                  </ng-container>
-                                <br/>
-                                
-                                
-                                <ng-container *ngIf="!payed">
-                                  <ng-container *ngIf="!created">
-                                <h2 id="ppp">Please, pay a price <br>     for these event!!!!</h2>
-                                <button id="payp" (click)="makePayment()">Pay</button>
-                              </ng-container>
-                                  
+                              <div id="makeorder2">
+                                <ng-container class="radiobb">
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='1' [(ngModel)]='morder_eventid'>Birthday
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='2' [(ngModel)]='morder_eventid'>New Year
+                              <br/>
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='3' [(ngModel)]='morder_eventid'>Holidays
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='4' [(ngModel)]='morder_eventid'>Birthday2
+                              <br/>
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='5' [(ngModel)]='morder_eventid'>NewYear  
+                              <input type="radio" class="radiob" required name='morder_eventid' [value]='6' [(ngModel)]='morder_eventid'>Holidays2
                                 </ng-container>
-                                <ng-container *ngIf="payed">
-                                  <br>
-                                  <a class="confirmation">Inpur a total number of visitors:</a>
-                                  <br>
-                                  <input type="text"  class="confirmation"  [(ngModel)]="visitors"/>
-                                  <br>
-                                  <a  class="confirmation">Do you confirm this price?:</a>
-                                  <br>
-                                  <button id="payp"   class="confirmation" (click)="confirmPayment()">Confirm</button>
-                                  </ng-container>
-                                  <ng-container *ngIf="confirmed">
-                                  <button (click)="createOrder()" style="margin-left: 25px; margin-top: 10px;">Create</button>
-                                  </ng-container>
-                                </div>
-                                </div>
-                            
-                          </ng-container>
+                              <br/>
+                              
+                              
+                              <ng-container *ngIf="!payed">
+                                <ng-container *ngIf="!created">
+                              <h2 id="ppp">Please, pay a price <br>     for these event!!!!</h2>
+                              <button id="payp" (click)="makePayment()">Pay</button>
+                            </ng-container>
+                                
+                              </ng-container>
+                              <ng-container *ngIf="payed">
+                                <br>
+                                <a class="confirmation">Inpur a total number of visitors:</a>
+                                <br>
+                                <input type="text"  class="confirmation"  [(ngModel)]="visitors"/>
+                                <br>
+                                <a  class="confirmation">Do you confirm this price?:</a>
+                                <br>
+                                <button id="payp"   class="confirmation" (click)="confirmPayment()">Confirm</button>
+                                </ng-container>
+                                <ng-container *ngIf="confirmed">
+                                <button (click)="createOrder()" style="margin-left: 25px; margin-top: 10px;">Create</button>
+                                </ng-container>
+                              </div>
+                              </div>
                           
-                          <br/>
-                        </ng-container> 
+                        </ng-container>
                         
-    
-  
-    
+                        <br/>
+                      </ng-container> 
