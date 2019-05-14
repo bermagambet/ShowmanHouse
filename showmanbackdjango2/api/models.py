@@ -9,6 +9,26 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from django.contrib.auth.models import User
+
+from datetime import datetime
+class OrdersManager(models.Manager):
+    def for_user(self, user):
+        return self.filter(created_by=user)
+#
+# class OrderAttendeesManager(models.Manager):
+#     def custom_filterr(self, xd):
+#         return super(OrderAttendeesManager, self).get_query_set().filter(customer_id=xd)
+#
+#
+# class OrderEventManager(models.Manager):
+#     def custom_filterr(self, xd):
+#         return super(OrderEventManager, self).get_query_set().filter(event_id=xd)
+#
+#
+# class OrderDepartmentManager(models.Manager):
+#     def custom_filterr(self, xd):
+#         return super(OrderDepartmentManager, self).get_query_set().filter(deparmtent_id=xd)
 
 class DjangoContentType(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
@@ -37,8 +57,9 @@ class DjangoMigrations(models.Model):
 
 class FeeSchedule1(models.Model):
     id = models.IntegerField(primary_key=True)
-    payment_date = models.DateField()
+    payment_date = models.DateField(datetime.now())
     payment_amount = models.IntegerField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=120)
 
     class Meta:
         db_table = 'Fee_Schedule'
@@ -54,6 +75,7 @@ class EventTypes1(models.Model):
         db_table = 'Event_Types'
 
 class PaymentMethod1(models.Model):
+    id = models.IntegerField(primary_key=True)
     method_name = models.CharField(max_length=50)
     payment_id = models.ForeignKey(FeeSchedule1, on_delete=models.CASCADE)
 
@@ -103,7 +125,7 @@ class Address1(models.Model):
     district = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     apartments = models.IntegerField()
-    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE, related_name='customers')
     city_id = models.ForeignKey(City1, on_delete=models.CASCADE)
 
     class Meta:
@@ -122,16 +144,16 @@ class Discount1(models.Model):
 
 class OurEvents1(models.Model):
     id = models.IntegerField(primary_key=True)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(datetime.now())
+    end_date = models.DateField(datetime.now())
     participants = models.IntegerField()
     price = models.IntegerField()
     type_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
     payment_id = models.ForeignKey(FeeSchedule1, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=120)
 
     class Meta:
         db_table = 'Our_Events'
-
 
 class ShowmanHouse1(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -147,9 +169,15 @@ class Orders1(models.Model):
     event_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
     customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
     department_id = models.ForeignKey(ShowmanHouse1, on_delete=models.CASCADE)
+    # customers = OrderAttendeesManager()
+    # departments = OrderDepartmentManager()
+    # events = OrderEventManager()
+    creator = OrdersManager()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=120)
 
     class Meta:
         db_table = 'Orders'
+
 
 
 class Employees1(models.Model):
@@ -194,9 +222,18 @@ class Trainee1(models.Model):
 
 class Avatars1(models.Model):
     id = models.IntegerField(primary_key=True)
-    avatar = models.ImageField(upload_to='C:/xd_team.project/showmanhouseback/oracledbimages/',
-                               default='C:/xd_team.project/showmanhouseback/oracledbimages/def/pepega.jpg')
+    id = models.IntegerField(primary_key=True)
+    avatar = models.ImageField(default='C:/xd_team.project/showmanhouseback/oracledbimages/ef/pepega.jpg')
     customer_id = models.ForeignKey(Attendees1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Avatars'
+
+class Avatars1Events(models.Model):
+    id = models.IntegerField(primary_key=True)
+    avatar = models.ImageField(default='C:/xd_team.project/showmanhouseback/oracledbimages/ef/pepega.jpg')
+    event_id = models.ForeignKey(EventTypes1, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'EventAvatars'
+        db_table = 'EventAvatars'

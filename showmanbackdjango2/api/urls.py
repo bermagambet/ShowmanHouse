@@ -1,17 +1,40 @@
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
 from api import views
-
-
-
 urlpatterns = [
     url('attendees/$', views.AttendeesList.as_view()),
-    url(r'^attendees/(?P<pk>\d+)/', views.attendee_detail, name="attendees"),
+    url(r'^attendees/(?P<pk>\d+)/$', views.attendee_detail, name="attendees"),
+    url(r'^avatar/(?P<pk2>\d+)/', views.avatar_detail),
+    url('avatar/$', views.AvatarList.as_view()),
     url('events/$', views.EventTypesList.as_view()),
     url(r'^events/(?P<pk>\d+)/', views.eventtype_detail, name="events"),
-    url('users/', views.UserList.as_view()),
+    url('avatarevent/$', views.EventAvatarList.as_view()),
+    url(r'^avatarsevent/(?P<pk>\d+)/', views.eventavatar_detail),
+    url('orders/$', views.OrdersList.as_view()),
+    url(r'^orders/(?P<pk>\d+)/', views.orders_detail, name="orders"),
+    url('createde/$', views.OurEventsList.as_view()),
+    url('createde/paginated/', views.OurEventsList2.as_view()),
+    url(r'^createde/(?P<pk>\d+)/', views.ourevent_detail, name="ourevents"),
+    url('departments/$', views.ShowmanHouseList.as_view()),
+    url(r'^departments/(?P<pk>\d+)/', views.showmanhouse_detail, name="departments"),
+    url('users/$', views.UserList.as_view()),
+    url(r'^users/(?P<pk>\w+)/', views.UserViewSet.as_view({'get':'retrieve'})),
     url('login/', views.login),
-    url('attendees/<int:pk>/postpicture/', views.upload_pic),
+    # url(r'^attendees/(?P<pk>\d+)/postpicture/', views.upload_pic),
+    url(r'^attendees/(?P<pk>\d+)/address/(?P<pk2>\d+)', views.AddressDetail.as_view()),
+    url('cities/$', views.CityList.as_view()),
+    url(r'^cities/(?P<pk>\d+)/', views.city_detail),
+    url('countries/$', views.CountryList.as_view()),
+    url(r'^countries/(?P<pk>\d+)/', views.country_detail),
+    url('discounts/$', views.DiscountList.as_view()),
+    url(r'^discounts/(?P<pk>\d+)/', views.discount_detail),
+    url('payments/$', views.PaymentList.as_view()),
+    url(r'^payments/(?P<pk>\d+)/', views.payment_detail),
+    url('employees/$', views.EmployeesList.as_view()),
+    url(r'^employees/(?P<pk>\d+)/', views.employee_detail),
+    url('fees/$', views.FeeList.as_view()),
+    url(r'^fees/(?P<pk>\d+)/', views.fee_detail),
     url('logout/', views.logout),
     # url('categories/<int:pk>/products/', views.CategoryProductList.as_view())
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_extensions',
+    'django_filters',
     'rest_framework.authtoken',
+    # 'djng',
+    # 'easy_thumnails',
     'api',
 
 ]
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,7 +79,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'showmanbackdjango2.wsgi.application'
+MEDIA_ROOT = '/home/dan/mysite/media/'
 
+MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -110,6 +116,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework.authentication.BasicAuthentication',
+
+        'rest_framework.authentication.SessionAuthentication',
+
+        'rest_framework.authentication.TokenAuthentication',
+
+    ),
+
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    # 'DEFAULT_PAGINATION_CLASS':
+    # 'showmandjangoback2.apps.core.pagination.HeaderPagination',
+    # 'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 3
+
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -125,7 +152,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT ='C:/xd_team.project/showmanhouseback/oracledbimages'
+
+MEDIA_URL = '/media/'

@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {MainService} from './main.service';
 import {HttpClient} from '@angular/common/http';
 import {IDepartment, IAuthResponse, IAttendees, IEventsTypes, IUser, IOrder, 
-IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees, IAvatar} 
+IRealUser, ICity, ICountry, IAddress, IDiscount, IPayment, IFeeSchedule, IPaginated, IEmployees, IAvatar, IOurEvents, IPaginatedOurEvents} 
 from '../modules/models';
 
 @Injectable({
@@ -65,13 +65,7 @@ export class ServiceForMainService extends MainService {
   }
 
 
-  
 
-  // createOrder(id: number, event_id: number, customer_id: number, department_id:number): Promise<IOrder> {
-  //   return this.post('http://localhost:8000/api/orders/', {
-  //     name: name
-  //   });
-  // }
 
   getEventTypes(suf: string): Promise<IEventsTypes[]> {
     return this.get('http://localhost:8000/api/events/' + suf, {});
@@ -123,6 +117,41 @@ export class ServiceForMainService extends MainService {
       id: id,
       event_title: event_title,
       event_description: event_description,
+    });
+  }
+
+  getOurEvents(str: string): Promise<IOurEvents[]> {
+    return this.get('http://localhost:8000/api/createde/' + str , {});
+  }
+  getOurEvents2(str: string): Promise<IOurEvents[]> {
+    return this.get('http://localhost:8000/api/createde/paginated/' + str , {});
+  }
+  
+  getPaginatedOurEvents(): Promise<IPaginatedOurEvents> {
+    return this.get('http://localhost:8000/api/createde/', {});
+  }
+
+  getOurEvent(event: IOurEvents): Promise<IOurEvents> {
+    return this.get('http://localhost:8000/api/createde/' + event.id + '/', {});
+  }
+
+  createOurEvent(id: number, start_date: string, end_date: string, participants: number, price: number, type_id: number, payment_id:number): Promise<IOurEvents> {
+    return this.post('http://localhost:8000/api/createde/', {
+      id: id,
+      start_date: start_date,
+      end_date: end_date,
+      participants: participants,
+      price: price,
+      type_id: type_id,
+      payment_id: payment_id
+    });
+  }
+
+  createFee(id: number, payment_date: string, payment_amount: number): Promise<IFeeSchedule> {
+    return this.post('http://localhost:8000/api/fees/', {
+      id: id,
+      payment_date: payment_date,
+      payment_amount: payment_amount,
     });
   }
 

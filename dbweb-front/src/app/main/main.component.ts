@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit, Sanitizer, SecurityContext} from '@angular/core';
 // import {ICategory, IProduct} from '../shared/models/models';
 import { ServiceForMainService } from '../shared/services/service-for-main.service';
-import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser, ICity, IAddress, ICountry, IDiscount, IFeeSchedule, IPayment, IEmployees, IAvatar } from '../shared/modules/models';
+import { IEventsTypes, IAttendees, IOrder, IDepartment, IRealUser, ICity, IAddress, ICountry, IDiscount, IFeeSchedule, IPayment, IEmployees, IAvatar, IOurEvents, IPaginatedOurEvents } from '../shared/modules/models';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -18,11 +18,11 @@ export class MainComponent implements OnInit {
   public neworders: number[] = [];
   public stringArray: string[] = [];
 
-  // public categories: ICategory[] = [];
   public loading = false;
   public selectedorderid: number;
 
-  // public products: IProduct[] = [];
+
+  public currentprice: number=0;
   public morderid: any = '';
   public morder_eventid: any = '';  
   public morder_customerid: any = '';
@@ -37,7 +37,9 @@ export class MainComponent implements OnInit {
   public ordereventid: any = '';
   public orders: IOrder[]=[];
   public order: IOrder;
+  public ourev: IOurEvents;
   public name: any = '';
+  public confirmedpayment = false;
   public departments: IDepartment[] = [];
   public department: IDepartment;
   public users: IRealUser[] = [];
@@ -60,13 +62,14 @@ export class MainComponent implements OnInit {
   // public departments: IDepartment[] = [];
   public item1: IAttendees;
   public item2: IAttendees;
-
+  public item1000: IOurEvents[]=[];
   public custcountry: any = '';
   public custcity: any = '';
   public custcitystate: any = '';
   public custdistrict: any = '';
   public custstreet: any = '';
   public custapart: any = '';
+  public oureventlastid: number=0;
 
   public item3: ICity;
   public item4: ICountry;
@@ -74,6 +77,7 @@ export class MainComponent implements OnInit {
   public suffix: any = '';
   public needdd: any = '';
   public isLogged = false;
+  public currentfees: IFeeSchedule;
   public item5:  IDiscount;
   public item100: IAvatar;
   public item6:  IDiscount;
@@ -93,6 +97,8 @@ export class MainComponent implements OnInit {
   public imm2: any = '';
   public payed = false;
   public created = false;
+  public ourpaginatedevents: IPaginatedOurEvents;
+  public showfees = false;
   public confirmed = false;
   public imm3: any = '';
   public visitor: number;
@@ -108,7 +114,11 @@ export class MainComponent implements OnInit {
 
   public customer = false;
   public avatars: IAvatar[]=[];
+  public offsetint: number=3;
   public avatar: IAvatar;
+  public feelastid: number;
+  public oureventslist: IOurEvents[]=[];
+  public transactions = false;
 
   constructor(private provider: ServiceForMainService, private sanitizer: DomSanitizer){
   }
@@ -117,6 +127,10 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
 
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLogged = true;
+    }
     this.provider.getAttendees().then(res => {
       this.attendees = res;
       this.getEmployees();
@@ -142,10 +156,7 @@ export class MainComponent implements OnInit {
       });
     }
     } ); 
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.isLogged = true;
-    }
+    
 
     if (this.isLogged) {
       this.getEventTypes();
@@ -177,6 +188,7 @@ export class MainComponent implements OnInit {
     if (this.morderid !== '' || this.morder_customerid !== '' || this.morder_departmentid !== '' || this.morder_eventid !== '') {
       this.provider.createOrder(this.nextorderid, this.morder_eventid, this.currentcustomerod, this.morder_departmentid).then(res => {
         this.orders.push(res);
+        
         this.item6.discount = this.item6.discount + 5;
         this.item6.orders_number = this.orders.length + 1;
         this.provider.updateDiscount(this.item6.id, this.item6.orders_number, this.item6.discount, this.item6.customer_id).then(res=>{
@@ -184,6 +196,13 @@ export class MainComponent implements OnInit {
         })
       });
     }
+  }
+
+  getFee(idd: IFeeSchedule){
+    this.provider.geFee(idd).then(res=>{
+      this.currentfees = res;
+      this.showfees = true;
+    });
   }
 
   getEmployees(){
@@ -244,6 +263,7 @@ export class MainComponent implements OnInit {
 
   getOrders() {
     this.myorderstrue = true;
+    this.transactions = false;
     this.thenewsrc =this.item100.avatar.replace('http://localhost:8000/media/', 'C:/xd_team.project/showmanhouseback/oracledbimages/'); 
     this.thenewsrc= this.sanitizer.sanitize(SecurityContext.STYLE, 'url(' + this.thenewsrc + ')');
     this.myinfotrue = false;
@@ -284,6 +304,7 @@ export class MainComponent implements OnInit {
   getInfo() {
     this.myinfotrue = true;
     this.myorderstrue = false;
+    this.transactions = false;
     this.provider.getAddress(this.currencustomer.id).then(res=>{
       this.address = res;
       this.custapart = res.apartments;
@@ -328,6 +349,20 @@ export class MainComponent implements OnInit {
     });
   }
 
+
+  getTransactions(){
+    this.myinfotrue = false;
+    this.myorderstrue = false;
+    this.transactions = true;
+    this.provider.geFees().then(res=>{
+      this.fees = res;
+      this.provider.getOurEvents('').then(res=>{
+        this.oureventslist = res;
+        
+      })
+    });
+
+  }
 
   // getProducts(category: ICategory) {
   //   this.provider.getProducts(category).then(res => {
@@ -436,6 +471,13 @@ export class MainComponent implements OnInit {
      });
   }
 
+  confirmPaymenterino(){
+    if(this.confirmedpayment)
+    this.confirmedpayment = false;
+    else if(!this.confirmedpayment)
+    this.confirmedpayment = true;
+  }
+  
   makeOrderReverse(){
     this.eventtypes = this.eventtypes.reverse();
   }
@@ -445,6 +487,13 @@ export class MainComponent implements OnInit {
        this.eventtypes = res;
        this.suffix = '';
      });
+  }
+
+  makeSearch(){
+    this.provider.getEventTypes('?search=' + this.suffix).then(res=>{
+      this.eventtypes = res;
+      this.suffix = '';
+    });
   }
 
   orderOrders(){
@@ -480,7 +529,50 @@ updateAddress1(){
   this.item3.city_state = this.custcitystate;
   this.provider.updateCity(this.item3).then(res=>{
   });
+}
 
+getFees(){
+  this.provider.geFees().then(res=>{
+    this.fees = res;
+    this.fees.forEach(element => {
+      this.feelastid = element.id;
+    });
+  });
+}
+
+getOurEvents(){
+  this.provider.getOurEvents('').then(res=>{
+    this.oureventslist = res;
+    this.oureventslist.forEach(element => {
+      this.oureventlastid = element.id;
+    });
+  });
+}
+
+getPaginatedOurEvents(){
+  this.provider.getOurEvents2('?limit=3&offset=' + this.offsetint).then(res=>{
+    this.oureventslist = res;
+    this.offsetint = this.offsetint + 3;
+  });
+}
+
+
+
+createOurEvent(){
+  console.log(this.oureventlastid + 1)
+  this.provider.createOurEvent(this.oureventlastid + 1, "2019-05-14", "2019-05-14", this.currentprice, this.currentprice/5, this.morder_eventid, this.feelastid+1).then(res=>{
+    this.oureventslist.push(res);
+    this.created = false;
+    this.confirmed = false;
+    this.payed = false;
+    this.confirmedpayment = false;
+  })
+}
+
+createFee(){
+  this.provider.createFee(this.feelastid + 1, "2019-05-14",  this.currentprice/5).then(res=>{
+    this.fees.push(res);
+  });
 }
 updateAddress2(){
   this.item4.country_name = this.custcountry;

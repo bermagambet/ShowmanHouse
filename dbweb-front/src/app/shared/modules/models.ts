@@ -89,7 +89,7 @@
 
   export interface IFeeSchedule{
     id: number;
-    payment_date: Date;
+    payment_date: string;
     payment_amount: number; 
   }
 
@@ -113,4 +113,20 @@
     id: number;
     avatar: string;
     customer_id: number;
+  }
+
+  export interface IOurEvents{
+    id: number;
+    start_date: string;
+    end_date: string;
+    participants: number;
+    price: number;
+    type_id: number;
+    payment_id: number;
+  }
+  export interface IPaginatedOurEvents{
+    count: number;
+    next: string;
+    previous: string;
+    results: IOurEvents;
   }

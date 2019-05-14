@@ -32,3 +32,10 @@ def login(request):
 def logout(request):
     request.auth.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+@api_view(['GET'])
+def current_user(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
