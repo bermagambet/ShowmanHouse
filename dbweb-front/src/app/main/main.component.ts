@@ -11,6 +11,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 })
 export class MainComponent implements OnInit {
 
+  public maxpageint: number=0;
   public myorderstrue = false;
   public myinfotrue = false;
   public neworder2: number[] = [];
@@ -64,6 +65,7 @@ export class MainComponent implements OnInit {
   public item2: IAttendees;
   public item1000: IOurEvents[]=[];
   public custcountry: any = '';
+  public pageint: number=1;
   public custcity: any = '';
   public custcitystate: any = '';
   public custdistrict: any = '';
@@ -119,6 +121,7 @@ export class MainComponent implements OnInit {
   public feelastid: number;
   public oureventslist: IOurEvents[]=[];
   public transactions = false;
+  public currentourevents: IOurEvents[]=[];
 
   constructor(private provider: ServiceForMainService, private sanitizer: DomSanitizer){
   }
@@ -127,10 +130,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.isLogged = true;
-    }
+    
     this.provider.getAttendees().then(res => {
       this.attendees = res;
       this.getEmployees();
@@ -157,9 +157,13 @@ export class MainComponent implements OnInit {
     }
     } ); 
     
-
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLogged = true;
+    }
     if (this.isLogged) {
       this.getEventTypes();
+      
     }
 
   }
@@ -550,10 +554,22 @@ getOurEvents(){
 }
 
 getPaginatedOurEvents(){
+  this.offsetint = this.offsetint + 3;
+  this.pageint = this.pageint + 1;
   this.provider.getOurEvents2('?limit=3&offset=' + this.offsetint).then(res=>{
-    this.oureventslist = res;
-    this.offsetint = this.offsetint + 3;
+    this.currentourevents = res.results;
+    this.maxpageint = res.count/3;
   });
+}
+
+getPaginatedOurEventsR(){
+  this.offsetint = this.offsetint - 3;
+  this.pageint = this.pageint - 1;
+  this.provider.getOurEvents2('?limit=3&offset=' + this.offsetint).then(res=>{
+    this.currentourevents = res.results;
+    this.maxpageint = res.count/3;
+  });
+
 }
 
 

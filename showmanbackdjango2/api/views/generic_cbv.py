@@ -15,6 +15,15 @@ from rest_framework import viewsets
 from api.filters import OrderFilter, EventFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
+from django.views.generic.base import TemplateView
+
+
+class HomePageView(TemplateView):
+    template_name = "C:/xd_team.project/showmanhouseback/ShowmanHouse/showmanbackdjango2/welcom.html"
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['latest_articles']=
 
 
 class EventTypesList(generics.ListCreateAPIView):

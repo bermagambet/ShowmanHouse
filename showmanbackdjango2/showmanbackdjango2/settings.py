@@ -65,7 +65,9 @@ ROOT_URLCONF = 'showmanbackdjango2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'C:/xd_team.project/showmanhouseback/ShowmanHouse/showmanbackdjango2/welcom.html'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

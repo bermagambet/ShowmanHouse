@@ -3,6 +3,9 @@ import json
 from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from django.template import Context, loader
 
 from api.models import Attendees1 as Attendees, EventTypes1 as EventTypes,\
     Orders1 as Orders, ShowmanHouse1 as ShowmanHouse, Address1, City1, Country1, Discount1,\
@@ -15,6 +18,9 @@ from api.serializers import AttendeesSerializer, EventTypesSerializer, OrdersSer
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 
+
+def index(request):
+    return render_to_response('welcome/welcom');
 
 @csrf_exempt
 def attendee_detail(request, pk):
@@ -255,6 +261,8 @@ def employee_detail(request, pk):
         category.delete()
         return JsonResponse({})
     return JsonResponse({'error': 'bad request'})
+
+
 
 
 @csrf_exempt

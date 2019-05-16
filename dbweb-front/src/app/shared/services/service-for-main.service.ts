@@ -123,7 +123,7 @@ export class ServiceForMainService extends MainService {
   getOurEvents(str: string): Promise<IOurEvents[]> {
     return this.get('http://localhost:8000/api/createde/' + str , {});
   }
-  getOurEvents2(str: string): Promise<IOurEvents[]> {
+  getOurEvents2(str: string): Promise<IPaginatedOurEvents> {
     return this.get('http://localhost:8000/api/createde/paginated/' + str , {});
   }
   
